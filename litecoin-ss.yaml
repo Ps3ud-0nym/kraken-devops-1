@@ -19,13 +19,13 @@ spec:
       - name: litecoin-core
         image: pseud0nym/litecoin-core:0.1.0
         imagePullPolicy: Always
-        #resources:
-        #  requests:
-        #    cpu: ${{variables.CpuRequests}}
-        #    memory: ${{variables.MemoryRequests}}
-        #  limits:
-        #    cpu: ${{variables.CpuLimits}}
-        #    memory: ${{variables.MemoryLimits}}
+        resources:
+          requests:
+            cpu: "500m"
+            memory: "1Gi"
+          limits:
+            cpu: "500m"
+            memory: "1Gi"
         env:
         ports: 
         #- containerPort: 9332 # Mainnet
