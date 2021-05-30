@@ -3,11 +3,18 @@
 pipeline{
     agent none
     stages {
-        stage('Docker Build and Push') {
+        stage('Docker Build') {
             agent any
             steps {
                 sh 'docker build . -t pseud0nym/litecoin-core:0.18.1'
-                sh 'docker push pseud0nym/litecoin-core:0.18.1'
+            }
+        stage('Docker Push') {
+            agent any
+            steps {
+                withCredentials([usernamePassword(credentialsId: 'dockerHub', passwordVariable: 'dockerHubPassword', usernameVariable: 'dockerHubUser')]) {
+                    sh "docker login -u ${env.dockerHubUser} -p ${env.dockerHubPassword}"
+                    sh 'docker push pseud0nym/litecoin-core:0.18.1'
+                }
             }
         }
   }
