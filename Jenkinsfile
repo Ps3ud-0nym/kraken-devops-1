@@ -8,6 +8,7 @@ pipeline{
             steps {
                 sh 'docker build . -t pseud0nym/litecoin-core:0.18.1'
             }
+        }    
         stage('Docker Push') {
             agent any
             steps {
@@ -18,5 +19,5 @@ pipeline{
             }
         }
      }
-    }
+
 }
