@@ -18,6 +18,18 @@ pipeline{
                 }
             }
         }
+        stage('Create PVC') {
+            agent any
+            steps {
+                sh 'kubectl apply -f litecoin-pvc.yaml'
+            }
+        }   
+         stage('Create Statefulset') {
+            agent any
+            steps {
+                sh 'kubectl apply -f litecoin-ss.yaml'
+            }
+        }
      }
 
 }
