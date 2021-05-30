@@ -1,0 +1,71 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: litecoin-core
+spec:
+  selector:
+    matchLabels:
+      app: litecoin-core 
+  serviceName: litecoin-core
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: litecoin-core
+    spec:
+        #securityContext:
+        # fsGroup: 0
+      containers:
+      - name: litecoin-core
+        image: pseud0nym/litecoin-core:0.1.0
+        imagePullPolicy: Always
+        #resources:
+        #  requests:
+        #    cpu: ${{variables.CpuRequests}}
+        #    memory: ${{variables.MemoryRequests}}
+        #  limits:
+        #    cpu: ${{variables.CpuLimits}}
+        #    memory: ${{variables.MemoryLimits}}
+        env:
+        ports: 
+        #- containerPort: 9332 # Mainnet
+        #  name: json-rpc-rest
+        #- containerPort: 9333 # Mainnet
+        #  name: p2p
+        #- containerPort: 19332 # Testnet
+        #  name: json-rpc-rest 
+        #- containerPort: 19333 # Testnet
+        #  name: p2p
+        - containerPort: 19332 # Regtest
+          name: json-rpc-rest
+        - containerPort: 19444 # Regtest
+          name: p2p
+        volumeMounts:
+        - name: litecoin-data
+          mountPath: /home/litecoin/.litecoin
+  volumeClaimTemplates:
+  - metadata:
+      name: litecoin-data
+    spec:
+      accessModes: [ "ReadWriteOnce" ]
+      resources:
+        requests:
+          storage: 5Gi
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: litecoin-core
+  labels:
+    app: litecoin-core
+spec:
+  clusterIP: "None"
+  ports:
+  - port: 19332
+    name: json-rpc-rest
+  - port: 19444
+    name: p2p
+  selector:
+    app: litecoin-core
+---
