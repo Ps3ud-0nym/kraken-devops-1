@@ -41,6 +41,7 @@ RUN curl -SLO https://download.litecoin.org/litecoin-${LITECOIN_VERSION}/linux/l
   && rm *.tar.gz
 
 COPY docker-entrypoint.sh /entrypoint.sh
+RUN chmod +x /entrypoint.sh
 
 VOLUME ["/home/litecoin/.litecoin"]
 
@@ -48,5 +49,5 @@ EXPOSE 9332 9333 19332 19333 19444
 
 ENTRYPOINT ["/entrypoint.sh"]
 
-# Run litecoin daemon, prinr output to console and run on regtest
+# Run litecoin daemon, prinr output to console and run on regtest - Daemon automatically runs as non-root user (litecoin)
 CMD ["litecoind", "-printtoconsole","-regtest=1"]

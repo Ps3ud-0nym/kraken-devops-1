@@ -17,7 +17,7 @@ spec:
         # fsGroup: 0
       containers:
       - name: litecoin-core
-        image: pseud0nym/litecoin-core:0.1.0
+        image: pseud0nym/litecoin-core:0.1.1
         imagePullPolicy: Always
         resources:
           requests:
