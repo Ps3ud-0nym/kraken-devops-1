@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
       - name: litecoin-core
-        image: pseud0nym/litecoin-core:0.1.1
+        image: pseud0nym/litecoin-core:0.18.1
         imagePullPolicy: Always
         resources:
           requests:
