@@ -13,8 +13,6 @@ spec:
       labels:
         app: litecoin-core
     spec:
-        #securityContext:
-        # fsGroup: 0
       containers:
       - name: litecoin-core
         image: pseud0nym/litecoin-core:0.1.1
