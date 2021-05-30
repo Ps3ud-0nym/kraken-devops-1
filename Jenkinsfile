@@ -6,7 +6,7 @@ pipeline{
         stage('Docker Build') {
             agent any
             steps {
-                sh 'sudo docker build . -t pseud0nym/litecoin-core:0.1.1'
+                sh 'docker build . -t pseud0nym/litecoin-core:0.1.1'
             }
         }
   }
