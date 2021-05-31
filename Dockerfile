@@ -1,9 +1,13 @@
 FROM debian:stable-slim
 
+# Dockerfile taken from this repo: https://github.com/uphold/docker-litecoin-core
+# Comments have been added where modifications have been made and for explanations
+
 LABEL maintainer.0="João Fonseca (@joaopaulofonseca)" \
   maintainer.1="Pedro Branco (@pedrobranco)" \
   maintainer.2="Rui Marinho (@ruimarinho)"
 
+# Add litecoin user, install dependencies, add gpg keys
 RUN useradd -r litecoin \
   && apt-get update -y \
   && apt-get install -y curl gnupg \
@@ -22,12 +26,15 @@ RUN useradd -r litecoin \
 
 ENV GOSU_VERSION=1.10
 
+
+# Install Gosu
 RUN curl -o /usr/local/bin/gosu -fSL https://github.com/tianon/gosu/releases/download/${GOSU_VERSION}/gosu-$(dpkg --print-architecture) \
   && curl -o /usr/local/bin/gosu.asc -fSL https://github.com/tianon/gosu/releases/download/${GOSU_VERSION}/gosu-$(dpkg --print-architecture).asc \
   && gpg --verify /usr/local/bin/gosu.asc \
   && rm /usr/local/bin/gosu.asc \
   && chmod +x /usr/local/bin/gosu
 
+# Set app specific environment variables
 ENV LITECOIN_VERSION=0.18.1
 ENV LITECOIN_DATA=/home/litecoin/.litecoin
 
@@ -40,11 +47,14 @@ RUN curl -SLO https://download.litecoin.org/litecoin-${LITECOIN_VERSION}/linux/l
   && tar --strip=2 -xzf *.tar.gz -C /usr/local/bin \
   && rm *.tar.gz
 
+# Copy entrypoint script and make it executable (Build was failing prior to chmod +x step being added).
 COPY docker-entrypoint.sh /entrypoint.sh
 RUN chmod +x /entrypoint.sh
 
+# Create volume to allow access to .litecoin dir from host machine
 VOLUME ["/home/litecoin/.litecoin"]
 
+# Expose ports internally on container
 EXPOSE 9332 9333 19332 19333 19444
 
 ENTRYPOINT ["/entrypoint.sh"]

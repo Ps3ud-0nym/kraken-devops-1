@@ -15,15 +15,15 @@ spec:
     spec:
       containers:
       - name: litecoin-core
-        image: pseud0nym/litecoin-core:0.18.1
+        image: pseud0nym/litecoin-core:0.18.1 # download this container image
         imagePullPolicy: Always
         resources:
           requests:
             cpu: "500m"
             memory: "1Gi"
           limits:
-            cpu: "500m"
-            memory: "1Gi"
+            cpu: "500m" # Use up to 50% of 1 CPU
+            memory: "1Gi" # Use up to 1Gi of memory
         env:
         ports: 
         #- containerPort: 9332 # Mainnet
@@ -40,8 +40,8 @@ spec:
           name: p2p
         volumeMounts:
         - name: litecoin-data
-          mountPath: /home/litecoin/.litecoin
-  volumeClaimTemplates:
+          mountPath: /home/litecoin/.litecoin # Mount this path into cluster filesystem in PVC to allow persistence.
+  volumeClaimTemplates: # Create PVC with 5Gi storage in RWO mode.
   - metadata:
       name: litecoin-data
     spec:

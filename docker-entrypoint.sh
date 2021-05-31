@@ -7,6 +7,7 @@ if [ $(echo "$1" | cut -c1) = "-" ]; then
   set -- litecoind "$@"
 fi
 
+# Create directories and set permissions to enable correct context for litecoind to run from.
 if [ $(echo "$1" | cut -c1) = "-" ] || [ "$1" = "litecoind" ]; then
   mkdir -p "$LITECOIN_DATA"
   chmod 770 "$LITECOIN_DATA" || echo "Could not chmod $LITECOIN_DATA (may not have appropriate permissions)"
