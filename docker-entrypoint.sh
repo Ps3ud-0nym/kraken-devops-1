@@ -1,4 +1,5 @@
 #!/bin/sh
+
 # File taken from this repo: https://github.com/uphold/docker-litecoin-core
 # Comments have been added where modifications have been made and for explanations
 set -e
