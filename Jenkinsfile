@@ -13,7 +13,7 @@ pipeline{
         stage('Docker Push') {
             agent any
             steps {
-                // Login to dockerhub and push previously built container to dockerhub.
+                // Login to dockerhub and push previously built image to dockerhub.
                 withCredentials([usernamePassword(credentialsId: 'dockerHub', passwordVariable: 'dockerHubPassword', usernameVariable: 'dockerHubUser')]) {
                     sh "docker login -u ${env.dockerHubUser} -p ${env.dockerHubPassword}"
                     sh 'docker push pseud0nym/litecoin-core:0.18.1'
