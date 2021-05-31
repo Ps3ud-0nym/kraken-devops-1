@@ -59,5 +59,5 @@ EXPOSE 9332 9333 19332 19333 19444
 
 ENTRYPOINT ["/entrypoint.sh"]
 
-# Run litecoin daemon, prinr output to console and run on regtest - Daemon automatically runs as non-root user (litecoin)
+# Run litecoin daemon, print output to console and run on regtest - Daemon automatically runs as non-root user (litecoin)
 CMD ["litecoind", "-printtoconsole","-regtest=1"]
